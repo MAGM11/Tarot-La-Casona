@@ -1,0 +1,45 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+
+const tarotCards = [
+  { name: "El Loco", meaning: "Nuevos comienzos, espontaneidad, libertad." },
+  { name: "El Mago", meaning: "Poder, creatividad, manifestación." },
+  { name: "La Sacerdotisa", meaning: "Sabiduría, intuición, conocimiento oculto." },
+  { name: "La Emperatriz", meaning: "Abundancia, fertilidad, naturaleza." },
+  { name: "El Emperador", meaning: "Estructura, estabilidad, autoridad." }
+];
+
+export default function TarotReader() {
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const drawCard = () => {
+    const randomCard = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+    setSelectedCard(randomCard);
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+      <h1 className="text-3xl font-bold mb-4">Lectura de Tarot</h1>
+      <Button onClick={drawCard} className="bg-purple-600 hover:bg-purple-700">
+        Sacar Carta
+      </Button>
+      {selectedCard && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mt-6"
+        >
+          <Card className="bg-gray-800 p-6 rounded-2xl shadow-lg">
+            <CardContent>
+              <h2 className="text-2xl font-semibold">{selectedCard.name}</h2>
+              <p className="text-gray-300 mt-2">{selectedCard.meaning}</p>
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
+    </div>
+  );
+}
